@@ -1,9 +1,9 @@
 name: Update League Tables
 
 on:
+  workflow_dispatch: # This line enables manual trigger
   schedule:
-    # Runs every day at 00:00 UTC
-    - cron:  '0 0 * * *'
+    - cron: '0 0 * * *' # Scheduled to run daily at 00:00 UTC
 
 jobs:
   update-data:
@@ -24,10 +24,10 @@ jobs:
     - name: Fetch league tables and save as JSON
       run: Rscript fetch_league_tables.R
 
-    - name: Commit and push updates
+    - name: Commit changes
       run: |
         git config --global user.email "your_email@example.com"
         git config --global user.name "GitHub Actions"
         git add -A
-        git commit -m "Update league tables" || echo "No changes to commit"
+        git commit -m "Automatically update soccer statistics" || echo "No changes to commit"
         git push
